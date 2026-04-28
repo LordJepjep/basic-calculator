@@ -104,10 +104,8 @@ inputButtons.addEventListener("click", (e) => {
  */
 
 /**
- * Next to do: should only show one operation at a time
- * Ex. 7+5 is valid 7+5+2 should not work
- * after 7+5, when an operation is clicked, it solves the
- * 7+5 first then displays result and the clicked operation
- * like 9+
- *
+ * Next to do: add decimal operator
+ * Handle non-valid decimal like 0.5.3
+ * Next to do: add backspace and clear
+ * Next to add: keyboard support
  * */
