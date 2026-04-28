@@ -1,38 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Basic Calculator</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div class="main">
-        <!-- <label for="inputField">Enter the operation:</label>
+      <!-- <label for="inputField">Enter the operation:</label>
         <input type="text" name="inputField" id="calcInput">
         <button id="calculateButton">Calculate</button> -->
-        <div id="calcBody">
-            <div class="inputScreen"></div>
-            <div class="inputButtons">
-                <button class="inputButton">7</button>
-                <button class="inputButton">8</button>
-                <button class="inputButton">9</button>
-                <button class="inputButton">÷</button>
-                <button class="inputButton">4</button>
-                <button class="inputButton">5</button>
-                <button class="inputButton">6</button>
-                <button class="inputButton">x</button>
-                <button class="inputButton">1</button>
-                <button class="inputButton">2</button>
-                <button class="inputButton">3</button>
-                <button class="inputButton">-</button>
-                <button class="inputButton">0</button>
-                <button class="inputButton">.</button>
-                <button class="inputButton">=</button>
-                <button class="inputButton">+</button>
-            </div>
+      <div id="calcBody">
+        <div class="inputScreen">
+          <div id="secondaryScreen"></div>
+          <div id="mainScreen"></div>
         </div>
+        <div class="inputButtons">
+          <button class="inputButton">7</button>
+          <button class="inputButton">8</button>
+          <button class="inputButton">9</button>
+          <button class="inputButton operatorButton">÷</button>
+          <button class="inputButton">4</button>
+          <button class="inputButton">5</button>
+          <button class="inputButton">6</button>
+          <button class="inputButton operatorButton">x</button>
+          <button class="inputButton">1</button>
+          <button class="inputButton">2</button>
+          <button class="inputButton">3</button>
+          <button class="inputButton operatorButton">-</button>
+          <button class="inputButton">0</button>
+          <button class="inputButton">.</button>
+          <button class="inputButton calculateButton">=</button>
+          <button class="inputButton operatorButton">+</button>
+        </div>
+      </div>
     </div>
     <script src="script.js" defer></script>
-</body>
+  </body>
 </html>
