@@ -79,7 +79,11 @@ function clear() {
   updateScreens("", "");
 }
 
-function backspace() {}
+function backspace() {
+  let newInput = currentInput.slice(0, -1);
+  currentInput = newInput;
+  updateScreens(newInput, "");
+}
 
 const inputField = document.querySelector("#calcInput");
 
