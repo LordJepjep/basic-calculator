@@ -1,4 +1,4 @@
-const operators = ["+", "-", "x", "÷"];
+const operators = ["+", "−", "x", "÷"];
 
 let currentValue = 0;
 let currentInput = "";
@@ -22,7 +22,7 @@ function divide(a, b) {
 function calculate(input) {
   console.log(`Input: ${input}`);
 
-  const parts = input.split(/([+\-x÷])/);
+  const parts = input.split(/([+\−x÷])/);
   console.log(parts);
 
   // if (isNaN(parts[0])) {
@@ -47,7 +47,7 @@ function calculate(input) {
       console.log(add(num1, num2));
       currentValue = add(num1, num2);
       break;
-    case "-":
+    case "−":
       console.log(subtract(num1, num2));
       currentValue = subtract(num1, num2);
       break;
@@ -106,18 +106,32 @@ inputButtons.addEventListener("click", (e) => {
       return;
     }
 
+    if (e.target.classList.contains("calculateButton")) {
+      operate();
+      screen.textContent = currentInput;
+      return;
+    }
+
+    if (
+      e.target.classList.contains("operatorButton") &&
+      btnText === "−" &&
+      (currentInput === "" || operators.some((op) => currentInput.endsWith(op)))
+    ) {
+      // allow unary minus as negative sign on empty input or after another operator
+      currentInput += "-";
+      updateScreens(currentInput, "");
+      return;
+    }
+
     if (
       e.target.classList.contains("calculateButton") ||
       (e.target.classList.contains("operatorButton") &&
         operators.some((op) => currentInput.includes(op)))
     ) {
-      console.log(`Check: ${currentValue}`);
+      console.log("operator/calculate");
       operate();
-      if (e.target.classList.contains("calculateButton")) {
-        screen.textContent = currentInput;
-        return;
-      }
     }
+    console.log("everthing else");
 
     currentInput += btnText;
     updateScreens(currentInput, "");

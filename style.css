@@ -62,3 +62,7 @@
 .inputButton:active {
   background-color: aqua;
 }
+
+.functionButton {
+  width: 250px;
+}
