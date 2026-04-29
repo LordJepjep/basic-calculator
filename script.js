@@ -25,6 +25,12 @@ function calculate(input) {
   const parts = input.split(/([+\-x÷])/);
   console.log(parts);
 
+  // if (isNaN(parts[0])) {
+  //   alert("Invalid Number!");
+  //   currentValue = "Invalid Number";
+  //   return;
+  // }
+
   const num1 = Number(parts[0]);
 
   if (parts.length <= 1) {
@@ -67,6 +73,14 @@ function operate() {
   currentInput = currentValue.toString();
 }
 
+function clear() {
+  currentInput = "";
+  currentValue = 0;
+  updateScreens("", "");
+}
+
+function backspace() {}
+
 const inputField = document.querySelector("#calcInput");
 
 const screen = document.querySelector("#mainScreen");
@@ -77,12 +91,27 @@ inputButtons.addEventListener("click", (e) => {
   if (e.target.classList.contains("inputButton")) {
     const btnText = e.target.textContent;
 
+    if (currentInput.toString() === "NaN") {
+      clear();
+    }
+    if (e.target.classList.contains("functionButton")) {
+      switch (e.target.textContent) {
+        case "Clear":
+          clear();
+          break;
+        case "Backspace":
+          backspace();
+          break;
+      }
+      return;
+    }
+
     if (
       e.target.classList.contains("calculateButton") ||
       (e.target.classList.contains("operatorButton") &&
         operators.some((op) => currentInput.includes(op)))
     ) {
-      console.log(e.target.textContent);
+      console.log(`Check: ${currentValue}`);
       operate();
       if (e.target.classList.contains("calculateButton")) {
         screen.textContent = currentInput;
@@ -91,7 +120,8 @@ inputButtons.addEventListener("click", (e) => {
     }
 
     currentInput += btnText;
-    screen.textContent = currentInput;
+    updateScreens(currentInput, "");
+    // screen.textContent = currentInput;
     console.log(`CurrentInput: ${currentInput}`);
   }
 });
@@ -109,3 +139,7 @@ inputButtons.addEventListener("click", (e) => {
  * Next to do: add backspace and clear
  * Next to add: keyboard support
  * */
+
+/**
+ * If isNaN, reset calculator on input
+ */
