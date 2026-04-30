@@ -1,4 +1,4 @@
-const operators = ["+", "−", "x", "÷"];
+const operators = ["+", "-", "x", "/"];
 
 let currentValue = 0;
 let currentInput = "";
@@ -22,8 +22,10 @@ function divide(a, b) {
 function calculate(input) {
   console.log(`Input: ${input}`);
 
-  const parts = input.split(/([+\−x÷])/);
+  const parts = input.split(/([+*/]|(?<=\d)-)/).filter((p) => p !== "");
   console.log(parts);
+
+  if (parts.length === 0) return;
 
   const num1 = Number(parts[0]);
 
@@ -34,23 +36,18 @@ function calculate(input) {
 
   const operator = parts[1];
   const num2 = Number(parts[2]);
-  console.log(`Inputs: ${num1}${operator}${num2}`);
 
   switch (operator) {
     case "+":
-      console.log(add(num1, num2));
       currentValue = add(num1, num2);
       break;
-    case "−":
-      console.log(subtract(num1, num2));
+    case "-":
       currentValue = subtract(num1, num2);
       break;
-    case "x":
-      console.log(multiply(num1, num2));
+    case "*":
       currentValue = multiply(num1, num2);
       break;
-    case "÷":
-      console.log(divide(num1, num2));
+    case "/":
       currentValue = divide(num1, num2);
       break;
   }
@@ -89,11 +86,18 @@ const secondaryScreen = document.querySelector("#secondaryScreen");
 const inputButtons = document.querySelector(".inputButtons");
 inputButtons.addEventListener("click", (e) => {
   if (e.target.classList.contains("inputButton")) {
-    const btnText = e.target.textContent;
+    const displayMap = {
+      "−": "-",
+      x: "*",
+      "÷": "/",
+      "=": "=",
+    };
+
+    const btnText = displayMap[e.target.textContent] || e.target.textContent;
     const isEqual = e.target.textContent === "=";
     const isOperator = e.target.classList.contains("operatorButton");
     const isFunction = e.target.classList.contains("functionButton");
-    const hasOperator = operators.some((op) => currentInput.includes(op));
+    // const hasOperator = operators.some((op) => currentInput.includes(op));
     const endsWithOperator = operators.some((op) => currentInput.endsWith(op));
 
     if (currentInput.toString() === "NaN") {
@@ -117,17 +121,17 @@ inputButtons.addEventListener("click", (e) => {
       return;
     }
 
-    if (isOperator && btnText === "−" && (currentInput === "" || hasOperator)) {
-      // allow unary minus as negative sign on empty input or after another operator
+    if (
+      isOperator &&
+      btnText === "-" &&
+      (currentInput === "" || operators.includes(currentInput.slice(-1)))
+    ) {
       currentInput += "-";
       updateScreens(currentInput, "");
       return;
     }
 
-    if (
-      isEqual ||
-      (isOperator && endsWithOperator)
-    ) {
+    if (isEqual || (isOperator && endsWithOperator)) {
       console.log("operator/calculate");
       operate();
     }
@@ -135,7 +139,6 @@ inputButtons.addEventListener("click", (e) => {
 
     currentInput += btnText;
     updateScreens(currentInput, "");
-    // screen.textContent = currentInput;
     console.log(`CurrentInput: ${currentInput}`);
   }
 });
