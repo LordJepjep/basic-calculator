@@ -25,12 +25,6 @@ function calculate(input) {
   const parts = input.split(/([+\−x÷])/);
   console.log(parts);
 
-  // if (isNaN(parts[0])) {
-  //   alert("Invalid Number!");
-  //   currentValue = "Invalid Number";
-  //   return;
-  // }
-
   const num1 = Number(parts[0]);
 
   if (parts.length <= 1) {
@@ -85,6 +79,8 @@ function backspace() {
   updateScreens(newInput, "");
 }
 
+function handleInput(btnText, isOperator, isFunction, isCalculate) {}
+
 const inputField = document.querySelector("#calcInput");
 
 const screen = document.querySelector("#mainScreen");
@@ -94,12 +90,17 @@ const inputButtons = document.querySelector(".inputButtons");
 inputButtons.addEventListener("click", (e) => {
   if (e.target.classList.contains("inputButton")) {
     const btnText = e.target.textContent;
+    const isEqual = e.target.textContent === "=";
+    const isOperator = e.target.classList.contains("operatorButton");
+    const isFunction = e.target.classList.contains("functionButton");
+    const hasOperator = operators.some((op) => currentInput.includes(op));
+    const endsWithOperator = operators.some((op) => currentInput.endsWith(op));
 
     if (currentInput.toString() === "NaN") {
       clear();
     }
-    if (e.target.classList.contains("functionButton")) {
-      switch (e.target.textContent) {
+    if (isFunction) {
+      switch (btnText) {
         case "Clear":
           clear();
           break;
@@ -110,17 +111,13 @@ inputButtons.addEventListener("click", (e) => {
       return;
     }
 
-    if (e.target.classList.contains("calculateButton")) {
+    if (isEqual) {
       operate();
       screen.textContent = currentInput;
       return;
     }
 
-    if (
-      e.target.classList.contains("operatorButton") &&
-      btnText === "−" &&
-      (currentInput === "" || operators.some((op) => currentInput.endsWith(op)))
-    ) {
+    if (isOperator && btnText === "−" && (currentInput === "" || hasOperator)) {
       // allow unary minus as negative sign on empty input or after another operator
       currentInput += "-";
       updateScreens(currentInput, "");
@@ -128,9 +125,8 @@ inputButtons.addEventListener("click", (e) => {
     }
 
     if (
-      e.target.classList.contains("calculateButton") ||
-      (e.target.classList.contains("operatorButton") &&
-        operators.some((op) => currentInput.includes(op)))
+      isEqual ||
+      (isOperator && endsWithOperator)
     ) {
       console.log("operator/calculate");
       operate();
@@ -152,10 +148,11 @@ inputButtons.addEventListener("click", (e) => {
  */
 
 /**
- * Next to do: add decimal operator
- * Handle non-valid decimal like 0.5.3
- * Next to do: add backspace and clear
  * Next to add: keyboard support
+ * Next to add: if NaN, display text instead
+ * Fix: if operation is done (equals) then a number is clicked then it should reset the input
+ * Ex: 4+5 will result in 9 then if user inputs a number like 7 then it should reset the input
+ * and just show 7
  * */
 
 /**
